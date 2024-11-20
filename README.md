@@ -7,8 +7,8 @@
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/DimePetrovic/levi9_challenge.git
+   cd levi9_challenge
 2. Install dependencies:
    npm install
 3. Start the application:
