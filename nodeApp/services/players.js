@@ -49,6 +49,10 @@ function assignPlayerToTeam(player, teamId) {
         throw new Error('Player and teamId are mandatory.');
     }
 
+    if(player.teamId) {
+        throw new Error('Player is already assinged to the team.');
+    }
+
     player.updatePlayerTeam(teamId);
 }
 

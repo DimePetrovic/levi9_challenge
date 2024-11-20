@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const PlayersService = require('./players');
 const Team = require('../models/team');
-const Player = require('../models/player');
 
 const teams = [];
 
