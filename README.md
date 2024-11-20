@@ -18,3 +18,10 @@
 - **Node.js**: A JavaScript runtime environment used for building the backend server.
 - **npm**: A package manager for JavaScript, used for managing dependencies.
 - **Visual Studio Code**: Integrated Development Environment (IDE) used for writing and managing the codebase.
+- **Jest**: A testing framework used for writing and running unit tests.
+
+### Testing
+1. Run all tests:
+   npm test
+2. Run specific tests:
+   npx jest tests/playersService.test.js
