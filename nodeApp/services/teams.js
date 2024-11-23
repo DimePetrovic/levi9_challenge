@@ -105,19 +105,22 @@ function draftTeams(playerIds){
 function generateTeams(size){
     const name1 = uuidv4();
     const name2 = uuidv4();
-    const team1Ids = [];
-    const team2Ids = [];
+
     const playersWithoutTeam = getPlayerIdsWithoutTeam();
     playersWithoutTeam.length = size*2 // shorten the array
    
-    const teams = draftTeams(playersWithoutTeam)
-    const team1 = teams[0]
-    const team2 = teams[1]
+    const teamsIds = draftTeams(playersWithoutTeam)
+    const team1Ids = teamsIds[0]
+    const team2Ids = teamsIds[1]
     // const team1 = createTeam(name1,team1Ids,size);
     // const team2 = createTeam(name2,team1Ids,sie);z
-    if(!team1 || !team2){
+    if(!team1Ids || !team2Ids){
         throw new Error("Teams empty");
     }
+
+    const team1 = createTeam(name1, team1Ids, size);
+    const team2 = createTeam(name2, team2Ids, size);
+
     return [team1,team2];
 }
 
