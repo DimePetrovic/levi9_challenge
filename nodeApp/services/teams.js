@@ -45,10 +45,19 @@ function getTeamAverageEloValue(team){
     return averageElo;
 }
 
+function getPlayersWithoutTeam(){
+    players
+    .filter(p=>p.teamId === null)
+    .sort((a, b) => b.elo - a.elo);
+    return players
+
+}
+
 module.exports = {
     createTeam,
     getAllTeams,
     getTeamById,
     updateTeamPlayers,
-    getTeamAverageEloValue
+    getTeamAverageEloValue,
+    getPlayersWithoutTeam
 };

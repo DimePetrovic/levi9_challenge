@@ -1,4 +1,6 @@
 const TeamsService = require('../services/teams');
+const PlayerService  =require("../services/players");
+const Team = require('../models/team');
 
 // POST /teams
 function createTeam(req, res) {
@@ -29,6 +31,21 @@ function getTeamById(req, res) {
     res.json(team);
 }
 
+
+// PUT /teams/generate_teams?teamSize=n
+function generateTeams(req,res){
+    const {teamSize} = req.query;
+    const team1 = [];
+    const team2 = [];
+    const players = TeamsService.getPlayersWithoutTeam();
+
+    for (let i = 0; i < teamSize; i++) {
+        team1.push(players[i]);
+        team2.push(players[i+1])
+    }
+    TeamsService.createTeam(team1);
+    TeamsService.createTeam(team1)
+}
 module.exports = {
     createTeam,
     getTeams,
