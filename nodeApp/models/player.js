@@ -32,12 +32,17 @@ class Player {
     }
 
     updatePlayer(S, R2, duration) {
-        const E = 1 / (1 + Math.pow(10, (this.elo - R2)/400));
-        const RNew = this.elo + this.ratingAdjustment * (S - E);
-
-        this.elo = RNew;
         this.hoursPlayed += duration;
         this.updateRatingAdjustment();
+
+        const E = 1 / (1 + Math.pow(10, ((R2 - this.elo)/400)));
+        const RNew = this.elo + Math.round(this.ratingAdjustment * (S - E));
+
+        this.elo = RNew;
+        if(S != 0.5){
+            this.wins = S > 0.5 ? this.wins + 1 : this.wins;
+            this.losses = S > 0.5 ? this.losses : this.losses + 1;
+        }
     }
 }
 
