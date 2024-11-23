@@ -12,11 +12,10 @@ describe('Team Service', () => {
       
         const team1 = TeamsService.createTeam("t1", ids1, 2);
         const team2 = TeamsService.createTeam("t2", ids2, 2);
-      
-        console.log(team1.id)
-        console.log(team2.id)
-        console.log(player2.teamId)
+    
         expect(player2.teamId).toBe(team2.id)
-      
+        expect(team1.players.length).toBe(1)
+        expect(team2.players.length).toBe(2)
+        
     })
 })
