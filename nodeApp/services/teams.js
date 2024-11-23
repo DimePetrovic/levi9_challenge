@@ -108,7 +108,6 @@ function generateTeams(size){
     const team1Ids = [];
     const team2Ids = [];
     const playersWithoutTeam = getPlayerIdsWithoutTeam();
-    // console.log(size,playersWithoutTeam.length) 
     playersWithoutTeam.length = size*2 // shorten the array
    
     const teams = draftTeams(playersWithoutTeam)
@@ -117,7 +116,7 @@ function generateTeams(size){
     // const team1 = createTeam(name1,team1Ids,size);
     // const team2 = createTeam(name2,team1Ids,sie);z
     if(!team1 || !team2){
-        console.error("Teams empty")
+        throw new Error("Teams empty");
     }
     return [team1,team2];
 }

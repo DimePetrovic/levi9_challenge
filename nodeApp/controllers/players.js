@@ -6,7 +6,6 @@ function createPlayer(req, res) {
     const { nickname } = req.body;
     try {
         const newPlayer = PlayersService.createPlayer(nickname);
-        console.log("new player from controller: ", newPlayer)
         res.status(200).json(newPlayer);
     } catch (error) {
         res.status(400).json({ error: error.message });
