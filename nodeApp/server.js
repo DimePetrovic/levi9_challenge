@@ -8,7 +8,7 @@ const matchesController = require('./controllers/matches');
 const app = express();
 const PORT = 8080;
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Players endpoints
 app.post('/players/create', playersController.createPlayer);
