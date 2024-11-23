@@ -1,5 +1,4 @@
 const Player = require('../models/player');
-const { removePlayerFromTeam } = require('./teams');
 const players = [];
 
 function createPlayer(nickname) {
@@ -45,18 +44,6 @@ function getPlayersByIds(ids) {
     return foundPlayers;
 }
 
-function assignPlayerToTeam(player, teamId) {
-    if(!player || !teamId) {
-        throw new Error('Player and teamId are mandatory.');
-    }
-
-    if(player.teamId) {
-        removePlayerFromTeam(player, teamId);
-    }
-
-    player.updatePlayerTeam(teamId);
-}
-
 function updatePlayers(playersToUpdate, S, R2, duration) {
     if (![0, 0.5, 1].includes(S)) {
         throw new Error('Invalid value for S. Allowed values are 0, 0.5, and 1.');
@@ -86,6 +73,5 @@ module.exports = {
     getAllPlayers,
     getPlayerById,
     getPlayersByIds,
-    updatePlayers,
-    assignPlayerToTeam
+    updatePlayers
 };

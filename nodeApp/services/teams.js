@@ -5,8 +5,7 @@ const Team = require('../models/team');
 const teams = [];
 
 function createTeam(teamName, playerIds, teamSize) {
-    console.log(teamName, playerIds, teamSize)
-    if (!teamName || !Array.isArray(playerIds) || teamSize < 1 || playerIds.length !== teamSize) {
+    if (!teamName || teamSize < 1 || playerIds.length != teamSize) {
         throw new Error(`Name and exactly ${teamSize} players are required.`);
     }
 
@@ -19,24 +18,25 @@ function createTeam(teamName, playerIds, teamSize) {
     const newTeam = new Team(teamName, players);
 
     newTeam.players.forEach(player => {
-        PlayersService.assignPlayerToTeam(player, newTeam.id);
+        assignPlayerToTeam(player, newTeam.id);
     });
 
     teams.push(newTeam);
     return newTeam;
 }
 
-function removePlayerFromTeam(player) {
-    if (!player) return;
-    const team = getTeamById(player.teamId);
-    
-    const playerIndex = team.players.findIndex((teamPlayer) => teamPlayer.id === player.id);
 
-    if (playerIndex === -1) {
-        throw new Error("Player not in the given team.")
+function assignPlayerToTeam(player, teamId) {
+    if(!player || !teamId) {
+        throw new Error('Player and teamId are mandatory.');
     }
-    
-    team.players.splice(playerIndex, 1);
+
+    if(player.teamId) {
+        const team = getTeamById(player.teamId)
+        team.removePlayerFromTeam(player)
+    }
+
+    player.updatePlayerTeam(teamId);
 }
 
 function getAllTeams() {
@@ -64,6 +64,5 @@ module.exports = {
     getAllTeams,
     getTeamById,
     updateTeamPlayers,
-    getTeamAverageEloValue,
-    removePlayerFromTeam
+    getTeamAverageEloValue
 };
