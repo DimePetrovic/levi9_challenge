@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.post('/players/create', playersController.createPlayer);
 app.get('/players', playersController.getAllPlayers);
 app.get('/players/:id', playersController.getPlayer);
+app.delete("/players",playersController.deletePlayers)
 
 // Teams endpoints
 app.post('/teams', teamsController.createTeam);

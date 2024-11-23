@@ -31,8 +31,22 @@ function getPlayer(req, res) {
     }
 }
 
+// DELETE /players
+function deletePlayers(req,res){
+    try {
+       if( !PlayersService.deletePlayers()){
+        res.status(500).json({error:"could not delete players"})
+        return
+    }
+    res.status(200).json({message: "players deleted successfully"})
+      return
+    } catch (error) {
+       console.error(error) 
+    }
+}
 module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayer,
+    deletePlayers
 };
