@@ -103,7 +103,7 @@ function deletePlayers(callback){
     db.query(`TRUNCATE TABLE players;TRUNCATE TABLE matches;TRUNCATE TABLE teams;`, (err, results) => {
         if (err) {
         console.error('Error deleting data:', err);
-         return callback(err, null);
+         callback(err, null);
         }
          callback(null, results);
     });
