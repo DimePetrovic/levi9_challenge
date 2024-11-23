@@ -1,4 +1,5 @@
 const Player = require('../models/player');
+const { removePlayerFromTeam } = require('./teams');
 const players = [];
 
 function createPlayer(nickname) {
@@ -50,7 +51,7 @@ function assignPlayerToTeam(player, teamId) {
     }
 
     if(player.teamId) {
-        throw new Error('Player is already assinged to the team.');
+        removePlayerFromTeam(player, teamId);
     }
 
     player.updatePlayerTeam(teamId);

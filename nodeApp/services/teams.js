@@ -4,9 +4,10 @@ const Team = require('../models/team');
 
 const teams = [];
 
-function createTeam(teamName, playerIds) {
-    if (!teamName || !Array.isArray(playerIds) || playerIds.length !== 5) {
-        throw new Error('Name and exactly 5 players are required.');
+function createTeam(teamName, playerIds, teamSize) {
+    console.log(teamName, playerIds, teamSize)
+    if (!teamName || !Array.isArray(playerIds) || teamSize < 1 || playerIds.length !== teamSize) {
+        throw new Error(`Name and exactly ${teamSize} players are required.`);
     }
 
     const existingTeam = teams.find((team) => team.teamName === teamName);
@@ -23,6 +24,19 @@ function createTeam(teamName, playerIds) {
 
     teams.push(newTeam);
     return newTeam;
+}
+
+function removePlayerFromTeam(player) {
+    if (!player) return;
+    const team = getTeamById(player.teamId);
+    
+    const playerIndex = team.players.findIndex((teamPlayer) => teamPlayer.id === player.id);
+
+    if (playerIndex === -1) {
+        throw new Error("Player not in the given team.")
+    }
+    
+    team.players.splice(playerIndex, 1);
 }
 
 function getAllTeams() {
@@ -50,5 +64,6 @@ module.exports = {
     getAllTeams,
     getTeamById,
     updateTeamPlayers,
-    getTeamAverageEloValue
+    getTeamAverageEloValue,
+    removePlayerFromTeam
 };
