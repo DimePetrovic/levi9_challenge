@@ -12,6 +12,18 @@ function createMatch({ team1Id, team2Id, winningTeamId, duration }) {
         throw new Error('One or both teams do not exist.');
     }
 
+    if (team1.id == team2.id) {
+        throw new Error('Match between same teems are not allowed');
+    } 
+
+    if (team1.players.length != team2.players.length) {
+        throw new Error('Both teams must be with the same number of players');
+    }
+
+    if (team1.players.length < 1) {
+        throw new Error('Teams must have minimum 1 player');
+    }
+
     if (!Number.isInteger(duration) || duration < 1) {
         throw new Error('Duration must be an integer greater than or equal to 1.');
     }

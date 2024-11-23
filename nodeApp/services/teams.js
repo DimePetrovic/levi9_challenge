@@ -59,10 +59,76 @@ function getTeamAverageEloValue(team){
     return averageElo;
 }
 
+function getPlayerIdsWithoutTeam(){
+    const allPlayers = PlayersService.getAllPlayers();
+    
+    return allPlayers.filter(p=>p.teamId === null)
+    .sort((a, b) => b.elo - a.elo)
+    .map(p => p.id);
+
+
+}
+function deleteTeams(){
+    while(teams.length){
+        teams.pop();
+    }
+    if( teams.length !==0){
+        return false;
+    } else{
+        return true
+    }
+}
+
+function draftTeams(playerIds){
+    const team1 = [];
+    const team2 = [];
+    teamSize = playerIds.length / 2;
+    for (let i = 0; i < playerIds.length / 2  - 1 ; i++) {
+        if(i%2===0){
+            team1.push(playerIds[i]);
+            team1.push(playerIds[playerIds.length - i -1])
+        }else{
+            team2.push(playerIds[i]);
+            team2.push(playerIds[playerIds.length - i -1])
+        }
+    }
+    if(teamSize % 2 == 0){
+        team2.push(playerIds[playerIds.length/2 -1]);
+        team2.push(playerIds[playerIds.length/ 2])
+    } else {
+        team1.push(playerIds[playerIds.length/2 -1]);
+        team2.push(playerIds[playerIds.length/ 2])
+    }
+    return [team1,team2]
+}
+
+function generateTeams(size){
+    const name1 = uuidv4();
+    const name2 = uuidv4();
+    const team1Ids = [];
+    const team2Ids = [];
+    const playersWithoutTeam = getPlayerIdsWithoutTeam();
+    // console.log(size,playersWithoutTeam.length) 
+    playersWithoutTeam.length = size*2 // shorten the array
+   
+    const teams = draftTeams(playersWithoutTeam)
+    const team1 = teams[0]
+    const team2 = teams[1]
+    // const team1 = createTeam(name1,team1Ids,size);
+    // const team2 = createTeam(name2,team1Ids,sie);z
+    if(!team1 || !team2){
+        console.error("Teams empty")
+    }
+    return [team1,team2];
+}
+
 module.exports = {
     createTeam,
     getAllTeams,
     getTeamById,
     updateTeamPlayers,
-    getTeamAverageEloValue
+    getTeamAverageEloValue,
+    generateTeams,
+    deleteTeams,
+    draftTeams
 };

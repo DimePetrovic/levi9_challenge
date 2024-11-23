@@ -5,14 +5,14 @@ function createPlayer(nickname) {
     if (!nickname) {
         throw new Error('Player nickname is required.');
     }
-
+    console.log({nickname})
     const existingPlayer = players.find((player) => player.nickname === nickname);
     if (existingPlayer) {
         throw new Error('Player with the same nickname already exists.');
     }
 
     const newPlayer = new Player(nickname);
-
+    console.log({newPlayer})
     players.push(newPlayer);
     return newPlayer;
 }
@@ -67,6 +67,7 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
 
     return updatedPlayers;
 }
+
 function deletePlayers(){
     while(players.length){
         players.pop();
@@ -76,13 +77,23 @@ function deletePlayers(){
     } else{
         return true
     }
-
 }
+
+function leaveTeam(player){
+    if (player.teamId == null){
+        throw new Error('Player does not have a team');
+    }
+    
+    player.updatePlayerTeam(null);
+    return player;
+}
+
 module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayerById,
     getPlayersByIds,
     updatePlayers,
+    leaveTeam,
     deletePlayers
-};
+}

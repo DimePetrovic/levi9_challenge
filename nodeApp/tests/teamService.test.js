@@ -52,7 +52,4 @@ describe('Team Service', () => {
         TeamsService.createTeam("team4", ids2);
     }).toThrow('Team with the same team name already exists.');
   });  
-
-
-  
 });

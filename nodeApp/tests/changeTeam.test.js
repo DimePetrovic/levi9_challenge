@@ -1,7 +1,7 @@
 const PlayersService = require('../services/players');
 const TeamsService = require('../services/teams');
 
-describe('Team Service', () => { 
+describe('Change Team', () => { 
     test('trying to change players team', () => {
         const player1 = PlayersService.createPlayer("u1");
         const player2 = PlayersService.createPlayer("u2");

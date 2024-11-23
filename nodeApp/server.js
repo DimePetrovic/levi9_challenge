@@ -14,11 +14,14 @@ app.use(express.json());
 app.post('/players/create', playersController.createPlayer);
 app.get('/players', playersController.getAllPlayers);
 app.get('/players/:id', playersController.getPlayer);
+app.put('/players/:player_id/leave_team', playersController.leaveTeam);
 app.delete("/players",playersController.deletePlayers)
 
 // Teams endpoints
 app.post('/teams', teamsController.createTeam);
 app.get('/teams/:id', teamsController.getTeamById);
+app.post('/teams/generate_teams', teamsController.generateTeams);
+
 
 // Matches endpoints
 app.post('/matches', matchesController.createMatch);
