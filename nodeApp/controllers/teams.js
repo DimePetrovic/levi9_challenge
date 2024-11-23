@@ -39,15 +39,16 @@ function getTeamById(req, res) {
 // PUT /teams/generate_teams?teamSize=n
 function generateTeams(req,res){
     const size = req.query.teamSize;
-    const name1 = req.body.players[0].teamName
-    const name2 = req.body.players[1].teamName
+    // const name1 = req.body.players[0].teamName
+    // const name2 = req.body.players[1].teamName
+    console.log({size})
     try{
-        const teams = TeamsService.generateTeams(size,name1,name2);
+        const teams = TeamsService.generateTeams(size);
         console.log(teams)
         res.status(200).json(teams)
 
     }catch(error){
-        res.statsu(500).json(error)
+        res.status(500).json(error)
     }
     
 }

@@ -53,7 +53,7 @@ function leaveTeam(req, res){
 // DELETE /players
 function deletePlayers(req,res){
     try {
-       if( !PlayersService.deletePlayers()){
+       if( !PlayersService.deletePlayers() || !TeamsService.deleteTeams()){
         res.status(500).json({error:"could not delete players"})
         return
     }

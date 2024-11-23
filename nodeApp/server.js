@@ -20,7 +20,7 @@ app.delete("/players",playersController.deletePlayers)
 // Teams endpoints
 app.post('/teams', teamsController.createTeam);
 app.get('/teams/:id', teamsController.getTeamById);
-app.put('/teams/generate_teams', teamsController.generateTeams);
+app.post('/teams/generate_teams', teamsController.generateTeams);
 
 
 // Matches endpoints
