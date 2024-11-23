@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const playersController = require('./controllers/players');
 const teamsController = require('./controllers/teams');
 const matchesController = require('./controllers/matches');
-const headers = require('./middleware/headers');
-
+const headers = require("./middleware/headers")
 const app = express();
 const PORT = 8080;
 
