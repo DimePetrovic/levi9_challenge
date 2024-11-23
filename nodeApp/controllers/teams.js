@@ -41,10 +41,8 @@ function generateTeams(req,res){
     const size = req.query.teamSize;
     // const name1 = req.body.players[0].teamName
     // const name2 = req.body.players[1].teamName
-    console.log({size})
     try{
         const teams = TeamsService.generateTeams(size);
-        console.log(teams)
         res.status(200).json(teams)
 
     }catch(error){
