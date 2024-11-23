@@ -64,6 +64,7 @@ function leaveTeam(req, res){
 function deletePlayers(req,res){
     PlayersService.deletePlayers((err,player)=>{
         if (err) {
+            
             // Log the error and send a 500 status response
             console.error('Error creating player:', err);
             return res.status(400).json({error: error.message});
