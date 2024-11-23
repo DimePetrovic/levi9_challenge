@@ -67,6 +67,7 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
 
     return updatedPlayers;
 }
+
 function deletePlayers(){
     while(players.length){
         players.pop();
@@ -76,13 +77,23 @@ function deletePlayers(){
     } else{
         return true
     }
-
 }
+
+function leaveTeam(player){
+    if (player.teamId == null){
+        throw new Error('Player does not have a team');
+    }
+    
+    player.updatePlayerTeam(null);
+    return player;
+}
+
 module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayerById,
     getPlayersByIds,
     updatePlayers,
+    leaveTeam,
     deletePlayers
-};
+}
