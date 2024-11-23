@@ -1,4 +1,6 @@
+const Team = require('../models/team');
 const TeamsService = require('./teams');
+const PlayersService = require('./players');
 
 function createMatch({ team1Id, team2Id, winningTeamId, duration }) {
     if (!team1Id || !team2Id) {
@@ -48,6 +50,18 @@ function createMatch({ team1Id, team2Id, winningTeamId, duration }) {
     else {
         TeamsService.updateTeamPlayers(team1, 0.5, team2ELO, duration);
         TeamsService.updateTeamPlayers(team2, 0.5, team1ELO, duration);
+    }
+
+    if(team1.randomGenerated){
+        team1.players.forEach(player => {
+            PlayersService.leaveTeam(player);
+        });
+    }
+
+    if(team2.randomGenerated){
+        team2.players.forEach(player => {
+            PlayersService.leaveTeam(player);
+        });
     }
 }
 

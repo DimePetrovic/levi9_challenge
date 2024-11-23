@@ -121,6 +121,9 @@ function generateTeams(size){
     const team1 = createTeam(name1, team1Ids, size);
     const team2 = createTeam(name2, team2Ids, size);
 
+    team1.randomGenerated = true;
+    team2.randomGenerated = true;
+
     return [team1,team2];
 }
 

@@ -47,8 +47,8 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
         throw new Error('Invalid value for S. Allowed values are 0, 0.5, and 1.');
     }
 
-    if (!playersToUpdate || !Array.isArray(playersToUpdate) || playersToUpdate.length !== 5) {
-        throw new Error('Players to update must contain exactly 5 players.');
+    if (!playersToUpdate || !Array.isArray(playersToUpdate)) {
+        throw new Error('Players to update must be an array of players.');
     }
 
     const updatedPlayers = playersToUpdate.map((player) => {

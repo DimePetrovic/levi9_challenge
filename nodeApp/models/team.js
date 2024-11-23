@@ -5,6 +5,7 @@ class Team {
         this.id = uuidv4();
         this.teamName = teamName;
         this.players = players;
+        this.randomGenerated = false;
     }
 
     removePlayerFromTeam(player) {
