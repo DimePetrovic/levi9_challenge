@@ -1,4 +1,4 @@
- const headers =(req, res, next) => {
+const headers =(req, res, next) => {
     res.set('Connection', 'keep-alive');
     next();
 };
