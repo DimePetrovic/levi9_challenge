@@ -59,11 +59,34 @@ function getTeamAverageEloValue(team){
     return averageElo;
 }
 
-function getPlayersWithoutTeam(){
-    players
-    .filter(p=>p.teamId === null)
-    .sort((a, b) => b.elo - a.elo);
-    return players
+function getPlayerIdsWithoutTeam(){
+    const allPlayers = PlayersService.getAllPlayers();
+    allPlayers.filter(p=>p.teamId === null)
+    .sort((a, b) => b.elo - a.elo)
+    .map(p => p.id);
+    return playerIds
+
+}
+
+function generateTeams(size, name1,name2){
+
+    const team1Ids = [];
+    const team2Ids = [];
+    const playersWithoutTeam = TeamsService.getPlayerIdsWithoutTeam();
+
+    for (let i = 0; i < size; i++) {
+        team1Ids.push(playersWithoutTeam[i]);
+        team2Ids.push(playersWithoutTeam[i+1])
+        console.log({team1Ids,team2Ids})
+    }
+    try{
+        const team1 = createTeam(name1,team1Ids,size);
+        const team2 = createTeam(name2,team1Ids,size);
+        return [team1,team2];
+    } catch(error){
+        console.error(error)
+    }
+
 
 }
 
@@ -73,5 +96,5 @@ module.exports = {
     getTeamById,
     updateTeamPlayers,
     getTeamAverageEloValue,
-    getPlayersWithoutTeam
+    generateTeams
 };
