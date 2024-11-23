@@ -4,12 +4,13 @@ const bodyParser = require('body-parser');
 const playersController = require('./controllers/players');
 const teamsController = require('./controllers/teams');
 const matchesController = require('./controllers/matches');
+const headers = require('./middleware/headers');
 
 const app = express();
 const PORT = 8080;
 
 app.use(bodyParser.json());
-
+app.use(headers)
 // Players endpoints
 app.post('/players/create', playersController.createPlayer);
 app.get('/players', playersController.getAllPlayers);
