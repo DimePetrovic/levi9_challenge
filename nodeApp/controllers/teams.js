@@ -3,8 +3,9 @@ const TeamsService = require('../services/teams');
 // POST /teams
 function createTeam(req, res) {
     const { teamName, players } = req.body;
+    const teamSize = req.query.teamSize;
     try {
-        const newTeam = TeamsService.createTeam(teamName, players);
+        const newTeam = TeamsService.createTeam(teamName, players, teamSize);
         res.status(200).json(newTeam);
     } catch (error) {
         res.status(400).json({ error: error.message });

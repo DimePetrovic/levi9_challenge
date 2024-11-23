@@ -44,18 +44,6 @@ function getPlayersByIds(ids) {
     return foundPlayers;
 }
 
-function assignPlayerToTeam(player, teamId) {
-    if(!player || !teamId) {
-        throw new Error('Player and teamId are mandatory.');
-    }
-
-    if(player.teamId) {
-        throw new Error('Player is already assinged to the team.');
-    }
-
-    player.updatePlayerTeam(teamId);
-}
-
 function updatePlayers(playersToUpdate, S, R2, duration) {
     if (![0, 0.5, 1].includes(S)) {
         throw new Error('Invalid value for S. Allowed values are 0, 0.5, and 1.');
@@ -80,6 +68,17 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
     return updatedPlayers;
 }
 
+function deletePlayers(){
+    while(players.length){
+        players.pop();
+    }
+    if( players.length !==0){
+        return false;
+    } else{
+        return true
+    }
+}
+
 function leaveTeam(player){
     if (player.teamId == null){
         throw new Error('Player does not have a team');
@@ -95,6 +94,6 @@ module.exports = {
     getPlayerById,
     getPlayersByIds,
     updatePlayers,
-    assignPlayerToTeam,
-    leaveTeam
-};
+    leaveTeam,
+    deletePlayers
+}
