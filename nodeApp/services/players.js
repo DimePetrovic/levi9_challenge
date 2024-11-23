@@ -99,24 +99,28 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
     return updatedPlayers;
 }
 
-function deletePlayers(){
-    while(players.length){
-        players.pop();
-    }
-    if( players.length !==0){
-        return false;
-    } else{
-        return true
-    }
+function deletePlayers(callback){
+    db.query(`TRUNCATE TABLE players;TRUNCATE TABLE matches;TRUNCATE TABLE teams;`, (err, results) => {
+        if (err) {
+        console.error('Error deleting data:', err);
+         callback(err, null);
+        }
+         callback(null, results);
+    });
+  
 }
-
-function leaveTeam(player){
-    if (player.teamId == null){
-        throw new Error('Player does not have a team');
-    }
+function leaveTeam(player,callback){
+    const id  = player.id
+    const query = 'UPDATE players SET teamId = NULL WHERE id = ?;';
     
-    player.updatePlayerTeam(null);
-    return player;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error leaving team for player with ID:', id, err);
+            return callback(err, null); // Pass the error to the callback
+        }
+        // Return the results through the callback
+        callback(null, results); // Pass the results to the callback
+    });
 }
 
 module.exports = {

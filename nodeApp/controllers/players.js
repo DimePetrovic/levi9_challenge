@@ -50,33 +50,27 @@ function getPlayer(req, res) {
 // PUT /players/:id/leave_team
 function leaveTeam(req, res){
     const id = req.params.player_id;
-    const player = PlayersService.getPlayerById(id);
-
-    const oldTeam = player.teamId ? TeamsService.getTeamById(player.teamId) : null;
-
-    try {
-        const updatedPlayer = PlayersService.leaveTeam(player);
-        if(oldTeam){
-            oldTeam.removePlayerFromTeam(player);
+    PlayersService.leaveTeam(id,(err,player)=>{
+        if (err) {
+            // Log the error and send a 500 status response
+            console.error('Error creating player:', err);
+           return res.status(400).json({error: error.message});
         }
-        res.status(200).json(updatedPlayer);
-    } catch (error) {
-        res.status(400).json({error: error.message});
-    }
+         return res.status(200).json(player);
+    });
+  
 }
 
 // DELETE /players
 function deletePlayers(req,res){
-    try {
-       if( !PlayersService.deletePlayers() || !TeamsService.deleteTeams()){
-        res.status(500).json({error:"could not delete players"})
-        return
-    }
-    res.status(200).json({message: "players deleted successfully"})
-      return
-    } catch (error) {
-       console.error(error) 
-    }
+    PlayersService.deletePlayers((err,player)=>{
+        if (err) {
+            // Log the error and send a 500 status response
+            console.error('Error creating player:', err);
+            return res.status(400).json({error: error.message});
+          }
+          return res.status(200).json(player);
+    });
 }
 module.exports = {
     createPlayer,

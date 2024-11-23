@@ -40,8 +40,7 @@ CREATE TABLE IF NOT EXISTS players (
 const createTeamsQuery = `
 CREATE TABLE IF NOT EXISTS teams (
   id VARCHAR(255) PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  city VARCHAR(255)
+  name VARCHAR(255) NOT NULL
 );`
 const createMatchesQuery = `
 CREATE TABLE IF NOT EXISTS matches (
