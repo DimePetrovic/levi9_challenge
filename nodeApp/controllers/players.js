@@ -4,9 +4,10 @@ const TeamsService = require('../services/teams');
 // POST /players/create
 function createPlayer(req, res) {
     const { nickname } = req.body;
-
+    console.log(request);
     try {
         const newPlayer = PlayersService.createPlayer(nickname);
+        console.log("new player from controller: ", newPlayer)
         res.status(200).json(newPlayer);
     } catch (error) {
         res.status(400).json({ error: error.message });
