@@ -17,24 +17,10 @@ const connection = mysql.createConnection({
 
 connection.connect(err => {
     if (err) {
-        console.error('Error connecting: ' + err.stack);
-        return;
+      console.error('Error connecting to the database:', err.stack);
+      return;
     }
-    console.log('Connected as id ' + connection.threadId);
-});
- 
-// Execute a query
-const sendQuery = async (queryString) => {
-    try {
-        // Use the promise-based API of the connection
-        const [results] = await connection.promise().query(queryString);
-        console.log(results); // Print the query results
-        return results;
-    } catch (err) {
-        console.error('Error executing query:', err.stack);
-        throw err; // Rethrow the error for handling upstream
-    }
-};
-
-// Export the sendQuery function for use in other modules
-module.exports = sendQuery;
+    console.log('Connected to MySQL database');
+  });
+  
+module.exports = connection;
