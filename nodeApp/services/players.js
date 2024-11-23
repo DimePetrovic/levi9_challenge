@@ -1,25 +1,36 @@
 const Player = require('../models/player');
 const players = [];
 const db = require('../db/db'); // import the db connection
+const {v4:uuidv4} = require('uuid')
+function createPlayer(nickname, callback) {
+    const id = uuidv4();  // Generate a unique ID for the player
+    const query = 'INSERT INTO players (id, nickname) VALUES (?, ?)';
+    
+    db.query(query, [id, nickname], (err, results) => {
+        if (err) {
+            console.error('Error inserting player:', err);
+            return callback(err, null);
+        }
+        
+        // Return the player object with default values and the id
+        const player = {
+            id,
+            nickname,  // Passed nickname from the request
+            wins: 0,
+            losses: 0,
+            elo: 0,
+            hoursPlayed: 0,
+            ratingAdjustment: null,
+            teamId: null
+        };
 
-function createPlayer(nickname) {
-    if (!nickname) {
-        throw new Error('Player nickname is required.');
-    }
-    console.log({nickname})
-    const existingPlayer = players.find((player) => player.nickname === nickname);
-    if (existingPlayer) {
-        throw new Error('Player with the same nickname already exists.');
-    }
-
-    const newPlayer = new Player(nickname);
-    console.log({newPlayer})
-    players.push(newPlayer);
-    return newPlayer;
+        // Return the player data through the callback
+        callback(null, player);
+    });
 }
 
 function getAllPlayers(callback) {
-    db.query('SELECT * FROM users', (err, results) => {
+    db.query('SELECT * FROM players', (err, results) => {
         if (err) {
         console.error('Error fetching users:', err);
         return callback(err, null);
@@ -29,7 +40,20 @@ function getAllPlayers(callback) {
 }
 
 function getPlayerById(id, callback) {
-    return players.find((p) => p.id == id);
+    // Generate a unique ID for the player
+    const query = 'SELECT * FROM players WHERE id = ?';
+    
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error inserting player:', id,err);
+            return callback(err, null);
+        }
+        
+        
+
+        // Return the player data through the callback
+        callback(null, results);
+    });
 }
 
 function getPlayersByIds(ids) {

@@ -26,24 +26,29 @@ connection.connect(err => {
   // SQL queries to create the tables
 const createPlayersQuery = `
 CREATE TABLE IF NOT EXISTS players (
-  id TEXT PRIMARY KEY,
-  nickname TEXT NOT NULL,
+  id VARCHAR(255) PRIMARY KEY, -- Change from TEXT to VARCHAR
+  nickname VARCHAR(255) NOT NULL,
   wins INT DEFAULT 0,
   losses INT DEFAULT 0,
   elo INT DEFAULT 0,
   hoursPlayed INT DEFAULT 0,
   ratingAdjustment INT DEFAULT NULL,
-  teamId TEXT DEFAULT NULL,
+  teamId VARCHAR(255) DEFAULT NULL, -- Change from TEXT to VARCHAR
   FOREIGN KEY (teamId) REFERENCES teams(id)
 );
 `;
-
+const createTeamsQuery = `
+CREATE TABLE IF NOT EXISTS teams (
+  id VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  city VARCHAR(255)
+);`
 const createMatchesQuery = `
 CREATE TABLE IF NOT EXISTS matches (
-  id TEXT PRIMARY KEY,
-  team1Id TEXT,
-  team2Id TEXT,
-  winningTeamId TEXT DEFAULT NULL,
+  id VARCHAR(255) PRIMARY KEY, -- Change from TEXT to VARCHAR
+  team1Id VARCHAR(255),
+  team2Id VARCHAR(255),
+  winningTeamId VARCHAR(255) DEFAULT NULL,
   duration INT DEFAULT 0,
   FOREIGN KEY (team1Id) REFERENCES teams(id),
   FOREIGN KEY (team2Id) REFERENCES teams(id),
@@ -53,6 +58,13 @@ CREATE TABLE IF NOT EXISTS matches (
 
 // Function to create the tables
 const createTables = () => {
+  connection.query(createTeamsQuery, (err, result) => {
+    if (err) {
+      console.error('Error creating matches table:', err.stack);
+      return;
+    }
+    console.log('Matches table created or already exists');
+  });
 // Execute the queries in order
 connection.query(createPlayersQuery, (err, result) => {
   if (err) {
@@ -69,6 +81,7 @@ connection.query(createMatchesQuery, (err, result) => {
   }
   console.log('Matches table created or already exists');
 });
+
 };
 
 // Call the function to create tables
