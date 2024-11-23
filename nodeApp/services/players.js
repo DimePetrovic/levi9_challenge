@@ -1,5 +1,6 @@
 const Player = require('../models/player');
 const players = [];
+const db = require('../db/db'); // import the db connection
 
 function createPlayer(nickname) {
     if (!nickname) {
@@ -17,11 +18,17 @@ function createPlayer(nickname) {
     return newPlayer;
 }
 
-function getAllPlayers() {
-    return players;
+function getAllPlayers(callback) {
+    db.query('SELECT * FROM users', (err, results) => {
+        if (err) {
+        console.error('Error fetching users:', err);
+        return callback(err, null);
+        }
+        callback(null, results);
+    });
 }
 
-function getPlayerById(id) {
+function getPlayerById(id, callback) {
     return players.find((p) => p.id == id);
 }
 

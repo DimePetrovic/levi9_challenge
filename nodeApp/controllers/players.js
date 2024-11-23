@@ -4,7 +4,6 @@ const TeamsService = require('../services/teams');
 // POST /players/create
 function createPlayer(req, res) {
     const { nickname } = req.body;
-
     try {
         const newPlayer = PlayersService.createPlayer(nickname);
         res.status(200).json(newPlayer);
@@ -15,7 +14,17 @@ function createPlayer(req, res) {
 
 // GET /players
 function getAllPlayers(req, res) {
-    const players = PlayersService.getAllPlayers();
+    PlayersService.getAllPlayers((err,players)=>{
+        if (err) {
+            // Log the error and send a 500 status response
+            console.error('Error fetching users:', err);
+            return res.status(500).json({ message: 'Error fetching users' });
+          }
+      
+          // Send a successful response with the users data
+          return res.status(200).json(players);
+    });
+    
     res.status(200).json(players);
 }
 
