@@ -1,4 +1,6 @@
+const Team = require('../models/team');
 const TeamsService = require('./teams');
+const PlayersService = require('./players');
 
 function createMatch({ team1Id, team2Id, winningTeamId, duration }) {
     if (!team1Id || !team2Id) {
@@ -10,6 +12,18 @@ function createMatch({ team1Id, team2Id, winningTeamId, duration }) {
 
     if (!team1 || !team2) {
         throw new Error('One or both teams do not exist.');
+    }
+
+    if (team1.id == team2.id) {
+        throw new Error('Match between same teems are not allowed');
+    } 
+
+    if (team1.players.length != team2.players.length) {
+        throw new Error('Both teams must be with the same number of players');
+    }
+
+    if (team1.players.length < 1) {
+        throw new Error('Teams must have minimum 1 player');
     }
 
     if (!Number.isInteger(duration) || duration < 1) {
@@ -36,6 +50,18 @@ function createMatch({ team1Id, team2Id, winningTeamId, duration }) {
     else {
         TeamsService.updateTeamPlayers(team1, 0.5, team2ELO, duration);
         TeamsService.updateTeamPlayers(team2, 0.5, team1ELO, duration);
+    }
+
+    if(team1.randomGenerated){
+        team1.players.forEach(player => {
+            PlayersService.leaveTeam(player);
+        });
+    }
+
+    if(team2.randomGenerated){
+        team2.players.forEach(player => {
+            PlayersService.leaveTeam(player);
+        });
     }
 }
 

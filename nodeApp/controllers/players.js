@@ -14,7 +14,6 @@ function createPlayer(req, res) {
           // Send a successful response with the users data
           return res.status(200).json(player);
     });
-   
 }
 
 // GET /players

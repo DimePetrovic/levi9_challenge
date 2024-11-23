@@ -10,7 +10,6 @@ const PORT = 8080;
 
 app.use(bodyParser.json());
 app.use(headers)
-
 // Players endpoints
 app.post('/players/create', playersController.createPlayer);
 app.get('/players', playersController.getAllPlayers);
