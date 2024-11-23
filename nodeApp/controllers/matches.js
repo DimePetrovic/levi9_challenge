@@ -9,12 +9,11 @@ function createMatch(req, res) {
     
         res.status(200).send()
  
-        
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 }
 
-module.exports = {{}
+module.exports = {
     createMatch,
 };
