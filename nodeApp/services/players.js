@@ -5,14 +5,14 @@ function createPlayer(nickname) {
     if (!nickname) {
         throw new Error('Player nickname is required.');
     }
-
+    console.log({nickname})
     const existingPlayer = players.find((player) => player.nickname === nickname);
     if (existingPlayer) {
         throw new Error('Player with the same nickname already exists.');
     }
 
     const newPlayer = new Player(nickname);
-
+    console.log({newPlayer})
     players.push(newPlayer);
     return newPlayer;
 }

@@ -78,30 +78,48 @@ function deleteTeams(){
         return true
     }
 }
+
+function draftTeams(playerIds){
+    const team1 = [];
+    const team2 = [];
+    teamSize = playerIds.length / 2;
+    for (let i = 0; i < playerIds.length / 2  - 1 ; i++) {
+        if(i%2===0){
+            team1.push(playerIds[i]);
+            team1.push(playerIds[playerIds.length - i -1])
+        }else{
+            team2.push(playerIds[i]);
+            team2.push(playerIds[playerIds.length - i -1])
+        }
+    }
+    if(teamSize % 2 == 0){
+        team2.push(playerIds[playerIds.length/2 -1]);
+        team2.push(playerIds[playerIds.length/ 2])
+    } else {
+        team1.push(playerIds[playerIds.length/2 -1]);
+        team2.push(playerIds[playerIds.length/ 2])
+    }
+    return [team1,team2]
+}
+
 function generateTeams(size){
     const name1 = uuidv4();
     const name2 = uuidv4();
     const team1Ids = [];
     const team2Ids = [];
     const playersWithoutTeam = getPlayerIdsWithoutTeam();
-    for (let i = 0; i < size; i++) {
-        team1Ids.push(playersWithoutTeam[i]);
-        team2Ids.push(playersWithoutTeam[i+1])
-        console.log({team1Ids,team2Ids})
-    }
-    
-    const team1 = createTeam(name1,team1Ids,size);
-    const team2 = createTeam(name2,team1Ids,size);
+    // console.log(size,playersWithoutTeam.length) 
+    playersWithoutTeam.length = size*2 // shorten the array
+   
+    const teams = draftTeams(playersWithoutTeam)
+    const team1 = teams[0]
+    const team2 = teams[1]
+    // const team1 = createTeam(name1,team1Ids,size);
+    // const team2 = createTeam(name2,team1Ids,sie);z
     if(!team1 || !team2){
         console.error("Teams empty")
     }
     return [team1,team2];
-    
-        
-       
-   
-
-
 }
 
 module.exports = {
@@ -111,5 +129,6 @@ module.exports = {
     updateTeamPlayers,
     getTeamAverageEloValue,
     generateTeams,
-    deleteTeams
+    deleteTeams,
+    draftTeams
 };
