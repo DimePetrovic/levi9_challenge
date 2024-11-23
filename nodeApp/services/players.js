@@ -79,12 +79,23 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
 
     return updatedPlayers;
 }
+function deletePlayers(){
+    while(players.length){
+        players.pop();
+    }
+    if( players.length !==0){
+        return false;
+    } else{
+        return true
+    }
 
+}
 module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayerById,
     getPlayersByIds,
     updatePlayers,
-    assignPlayerToTeam
+    assignPlayerToTeam,
+    deletePlayers
 };
