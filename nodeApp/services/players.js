@@ -80,11 +80,21 @@ function updatePlayers(playersToUpdate, S, R2, duration) {
     return updatedPlayers;
 }
 
+function leaveTeam(player){
+    if (player.teamId == null){
+        throw new Error('Player does not have a team');
+    }
+    
+    player.updatePlayerTeam(null);
+    return player;
+}
+
 module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayerById,
     getPlayersByIds,
     updatePlayers,
-    assignPlayerToTeam
+    assignPlayerToTeam,
+    leaveTeam
 };

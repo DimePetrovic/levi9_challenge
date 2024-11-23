@@ -31,8 +31,23 @@ function getPlayer(req, res) {
     }
 }
 
+// PUT /players/:id/leave_team
+function leaveTeam(req, res){
+    console.log("Hej");
+    const id = req.params.player_id;
+    const player = PlayersService.getPlayerById(id);
+
+    try {
+        const updatedPlayer = PlayersService.leaveTeam(player);
+        res.status(200).json(updatedPlayer);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
 module.exports = {
     createPlayer,
     getAllPlayers,
     getPlayer,
+    leaveTeam
 };
